@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{%extends 'myApp/parent.html'%}
+{%load static%}	
+<html>
+{%block title_block%}
+	{{post.title}}
+{%endblock%}
+<body>
+	{%block content_block%}
+	<div class="container">
+		<br>
+		<button onclick="history.back()" class="btn btn-warning btn-sm">< Back</button>
+		<p>{{post.body}}</p>
+		<center>
+			<img src="/{{post.photo}}" alt="N/A" id="post">
+		</center>
+		<br>
+		<br>
+		<div style="display: inline-block;">
+			<form style="display: inline-block;" method="post">
+				{%csrf_token%}
+				{%if like.liked%}
+					<button type="submit" class="btn btn-primary" style="color:red; font-size: 20px;"><span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;<span style="color:white;">{{likes.count}}</span></button>
+				{%else%}
+					<button type="submit" class="btn btn-primary" style="color:red; font-size: 20px;"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;&nbsp;<span style="color:white;">{{likes.count}}</span></button>
+				{%endif%}
+				{{like_f.as_p}}
+			</form>
+		</div>
+		
+		<br>
+		<br>
+		<br>
+
+		<form method='post'>
+				{{form.as_p}}
+				{%csrf_token%}
+				<input type="submit" class="btn btn-primary" value="comment">
+		</form>
+		{%with comments.count as comments_count%}
+			<h3><span class="badge btn btn-success" style="font-size: 20px;">{{comments_count}}</span> Comment{{comments_count|pluralize}} : </h3>
+		{%endwith%}
+		{%if comments%}
+			{%for c in comments%}
+				<div class="col-sm-2 text-center"></div>
+				<div class="col-sm-10">
+					<h4 style="line-height: 2px; color: #ffbb00">{{c.user.username}}</h4>
+					<p>{{c.comment}}</p>
+					<br>
+				</div>
+			{%endfor%}
+			<hr>
+		{%endif%}
+	</div>
+	{%endblock%}
+</body>
+</html>
+
+						

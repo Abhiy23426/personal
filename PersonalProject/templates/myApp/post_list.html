@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{%extends 'myApp/parent.html'%}
+{%load static%}	
+<html>
+{%block title_block%}
+	Home Page
+{%endblock%}
+<body>
+	{%block content_block%}
+	<div class="container">
+		<br>
+		{%include 'myApp/pagination.html' with page=post_list%}
+		{%for post in post_list%}
+			<br>
+			<center>
+			<a href="{{post.get_absolute_url}}" >
+				<img style="border: 5px ridge #8ae3eb; box-shadow: 2px 2px 4px black" src="/{{post.photo}}" alt="N/A" id="list">
+			</a>
+			</center>
+			<h4 style="color: #a8024d; text-shadow: 0.5px 0.5px 5px white;"> Likes : {{post.like.count}}</h4>
+			<hr style="border-top: 2px solid grey;">
+			<br>
+		{%endfor%}
+		{%include 'myApp/pagination.html' with page=post_list%}
+		<br>
+		<br>
+	</div>
+	{%endblock%}
+</body>
+</html>
